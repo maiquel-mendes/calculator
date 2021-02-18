@@ -8,13 +8,55 @@ class CalcController {
         this._displayCalc = '0';
         this._currentDate;
         this.initialize();
+        this.initButtonsEvents();
 
     }
 
     initialize(){
 
-        
+        this.setDisplayDataTime()
 
+        setInterval(()=>{
+
+            this.setDisplayDataTime()
+            
+
+        },1000)
+
+
+    }
+
+    addEventListenerAll(element, oi, fn ){
+        let a = oi.split(' ');
+        console.log(a)
+        a.forEach(x => {
+            element.addEventListener(x, fn, false)
+        } )
+    }
+
+
+
+    initButtonsEvents(){
+
+        let buttons = document.querySelectorAll("#buttons > g, #parts > g");
+
+        buttons.forEach((btn, index) => {
+
+            this.addEventListenerAll(btn, "mousedown", (event) => {
+
+                console.log(btn.className.baseVal.replace('btn-',''))
+            })
+
+            this.addEventListenerAll(btn, "mouseover", ()=>{
+                btn.style.cursor = "pointer"
+            })
+        })
+    }
+
+    setDisplayDataTime(){
+        
+            this.displayDate = this.currentDate.toLocaleDateString(this._locale);
+            this.displayTime = this.currentDate.toLocaleTimeString(this._locale);
 
     }
 
